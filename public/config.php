@@ -1,5 +1,5 @@
 <?php
-define('API_BASE', rtrim(getenv('API_BASE_URL') ?: 'https://aladin-e-commerce-api.onrender.com','/'));
+define('API_BASE', 'https://aladin-e-commerce-api.onrender.com');
 define('ADMIN_PASSWORD', getenv('ADMIN_PASSWORD') ?: '');
 define('SYNC_SECRET', getenv('SYNC_SECRET') ?: '');
 define('CACHE_FILE', sys_get_temp_dir().'/aladin_products_cache.json');
