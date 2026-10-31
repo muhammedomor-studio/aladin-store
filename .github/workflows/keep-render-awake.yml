@@ -1,0 +1,26 @@
+name: Keep Aladin Website and API awake
+on:
+  schedule:
+    # GitHub may delay scheduled workflows; this runs every 9 minutes when scheduled.
+    - cron: '*/9 * * * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping Aladin storefront
+        env:
+          STORE_URL: ${{ secrets.STORE_SYNC_URL }}
+        run: |
+          test -n "$STORE_URL" || (echo "Missing STORE_SYNC_URL secret" && exit 1)
+          curl --location --max-time 60 --retry 2 --retry-delay 5 \
+            --silent --show-error --output /dev/null \
+            --write-out "Store ping: HTTP %{http_code} | %{time_total}s\n" \
+            "${STORE_URL%/}/"
+      - name: Ping Aladin API backend
+        run: |
+          curl --location --max-time 60 --retry 2 --retry-delay 5 \
+            --silent --show-error --output /dev/null \
+            --write-out "API ping: HTTP %{http_code} | %{time_total}s\n" \
+            "https://aladin-e-commerce-api.onrender.com/"

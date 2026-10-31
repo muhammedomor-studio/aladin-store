@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: aladin-custom-store
+    runtime: docker
+    plan: free
+    envVars:
+      - key: API_BASE_URL
+        value: https://aladin-e-commerce-api.onrender.com
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SYNC_SECRET
+        sync: false
